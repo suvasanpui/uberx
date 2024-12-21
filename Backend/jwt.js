@@ -1,4 +1,5 @@
 const jwt = require('jsonwebtoken');
+const userModel = require('./models/user.models');
 
 //middleware take 3 parameter
 const jwtmiddleware = async(req, res, next) => {
@@ -10,6 +11,9 @@ const jwtmiddleware = async(req, res, next) => {
     // Extract the jwt token from the request headers
     const token =req.headers.authorization.split(' ')[1];
     if(!token) return res.status(401).json({ error: 'Unauthorized' });
+
+    const isBlacklisted = await userModel.findOne({ token: token });
+    if(isBlacklisted) return res.status(401).json({ error: 'Unauthorized' });
 
     try{
         // Verify the JWT token
@@ -30,7 +34,7 @@ const jwtmiddleware = async(req, res, next) => {
 // Function to generate JWT token
 const generateToken = (userData) => {
     // Generate a new JWT token using user data
-    return jwt.sign(userData, process.env.JWT_SECRET, {expiresIn: 300000}); //userData is a parameter that take value from 'personRouteb.js' file
+    return jwt.sign(userData, process.env.JWT_SECRET, {expiresIn: '24h'}); //userData is a parameter that take value from 'personRouteb.js' file
 }
 
 module.exports = {jwtmiddleware, generateToken};

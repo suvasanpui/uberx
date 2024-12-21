@@ -17,5 +17,7 @@ route.post('/login',[
 
 route.get('/profile',jwtmiddleware,userController.userProfile)
 
+route.post('/logout',jwtmiddleware,userController.logoutUser)
+
 
 module.exports = route;

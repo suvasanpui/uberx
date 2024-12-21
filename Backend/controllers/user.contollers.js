@@ -2,6 +2,7 @@ const userModel = require("../models/user.models");
 const userService = require("../services/user.service");
 const { validationResult } = require("express-validator");
 const { jwtmiddleware, generateToken } = require("../jwt");
+const blacklistTokenModel=require('../models/blacklistToken.model')
 
 //new user registration
 module.exports.registerUser = async (req, res, next) => {
@@ -67,3 +68,9 @@ module.exports.userProfile = async (req, res, next) => {
     res.status(500).json({ error: "user not found" });
   }
 };
+
+module.exports.logoutUser = async (req, res, next) => {
+  const token=req.headers.authorization.split(' ')[1];
+  await blacklistTokenModel.create({token});
+  res.status(200).json({message:'Logout successfully'});
+}
