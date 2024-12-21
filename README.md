@@ -128,3 +128,50 @@ Authenticate a user and retrieve a JWT token.
 #### Notes
 - Returns JWT token upon successful authentication
 - Token contains user ID and email in payload
+
+### GET /users/profile
+Get the profile information of the authenticated user.
+
+#### Request Headers
+```json
+{
+  "Authorization": "Bearer JWT_TOKEN"
+}
+```
+
+#### Response
+
+##### Success Response
+- **Status Code:** 200 OK
+```json
+{
+  "user": {
+    "fullname": {
+      "firstname": "string",
+      "lastname": "string"
+    },
+    "email": "string",
+    "_id": "string"
+  }
+}
+```
+
+##### Error Responses
+- **Status Code:** 500 Internal Server Error
+  - When user is not found
+```json
+{
+  "error": "user not found"
+}
+```
+- **Status Code:** 401 Unauthorized
+  - When JWT token is missing or invalid
+```json
+{
+  "error": "Unauthorized"
+}
+```
+
+#### Notes
+- Requires a valid JWT token in the Authorization header
+- Token must be in the format: `Bearer <token>`

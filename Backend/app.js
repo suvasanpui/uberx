@@ -16,7 +16,6 @@ const db = require("./db/db");
 
 const userRoutes=require('./routes/user.routes')
 
-
 app.get('/', function (req, res) {
   res.send('Welcome to UBER')
 })
