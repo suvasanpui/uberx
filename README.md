@@ -175,3 +175,37 @@ Get the profile information of the authenticated user.
 #### Notes
 - Requires a valid JWT token in the Authorization header
 - Token must be in the format: `Bearer <token>`
+
+### POST /users/logout
+Log out the currently authenticated user by blacklisting their token.
+
+#### Request Headers
+```json
+{
+  "Authorization": "Bearer JWT_TOKEN"
+}
+```
+
+#### Response
+
+##### Success Response
+- **Status Code:** 200 OK
+```json
+{
+  "message": "Logout successfully"
+}
+```
+
+##### Error Responses
+- **Status Code:** 401 Unauthorized
+  - When JWT token is missing or invalid
+```json
+{
+  "error": "Unauthorized"
+}
+```
+
+#### Notes
+- Requires a valid JWT token in the Authorization header
+- Token must be in the format: `Bearer <token>`
+- The token will be blacklisted and can't be used for future requests
