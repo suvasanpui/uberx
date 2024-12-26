@@ -21,7 +21,7 @@ route.post('/login',[
 
 route.get('/profile',jwtmiddleware,captainController.captainProfile)
 
-route.post('/logout',jwtmiddleware,captainController.logoutCaptain)
+route.get('/logout',jwtmiddleware,captainController.logoutCaptain)
 
 module.exports = route;
 
